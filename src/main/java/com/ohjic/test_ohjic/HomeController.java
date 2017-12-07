@@ -20,7 +20,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 
-		ModelAndView mav = new ModelAndView("board/board_list");
+		ModelAndView mav = new ModelAndView("home");
 		
 		List<Board> boardList = boardService.getBoardList();
 		

@@ -29,29 +29,39 @@
 </div>
 
 <div>
-	<table>
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>조회수</th>
-				<th>작성일자</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="list" items="${list}" varStatus="status">
-				<tr>
-					<td>${status.index + 1 }</td>
-					<td><a href="javascript:get(${list.seq})">${list.title }</a></td>
-					<td>${list.name }</td>
-					<td>${list.cnt }</td>
-					<td>${list.regDate }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<div>
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+		</select>
+	</div>
 	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+					<th>작성일자</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="list" items="${list}" varStatus="status">
+					<tr>
+						<td>${status.index + 1 }</td>
+						<td><a href="javascript:get(${list.seq})">${list.title }</a></td>
+						<td>${list.name }</td>
+						<td>${list.cnt }</td>
+						<td>${list.regDate }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+		
 	<div class="center" style="margin-top: 50px;">
 		<button onclick="regist()">글쓰기</button>
 	</div>
