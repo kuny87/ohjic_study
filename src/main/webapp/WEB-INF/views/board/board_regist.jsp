@@ -48,6 +48,7 @@
 	
 	<div class="center" style="margin-top: 50px;">
 		<button onclick="javascript:regist()">보내기</button>
+		<button onclick="javascript:list()">글목록</button>
 	</div>
 </div>
 
@@ -71,7 +72,7 @@
 		}).done( function(result) {
 			if (result.success) {
 				alert("등록완료")
-				location.href = "/test_ohjic";
+				location.href = "/test_ohjic/board_list";
 			}
 		}).fail(function(result) {
 			alert("등록실패")
@@ -79,6 +80,9 @@
 		
 	}
 	
+	function list(){
+		location.href = "/test_ohjic/board_list";
+	}
 	
 </script>
 

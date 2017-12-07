@@ -33,7 +33,7 @@
 		select * from board_free
 	</select>
 	
-	<select id="selectBoardOne" parameterType="com.ohjic.test_ohjic.model.Board" resultMap="BoardMap">
+	<select id="selectBoard" parameterType="com.ohjic.test_ohjic.model.Board" resultMap="BoardMap">
 		select * from board_free where seq = #{seq} 
 	</select>
 	

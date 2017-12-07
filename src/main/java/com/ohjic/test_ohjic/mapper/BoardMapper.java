@@ -17,4 +17,6 @@ public interface BoardMapper {
 	
 	List<Board> selectBoardList();
 	
+	Board selectBoard(Board board);
+	
 }

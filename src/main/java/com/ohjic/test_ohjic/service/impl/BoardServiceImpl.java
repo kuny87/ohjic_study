@@ -17,12 +17,12 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public boolean registBoard(Board board) {
-		return false;
+		return boardMapper.insertBoard(board) == 1;
 	}
 
 	@Override
 	public boolean modifyBoard(Board board) {
-		return false;
+		return boardMapper.updateBoard(board) == 1;
 	}
 
 	@Override
@@ -33,6 +33,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> getBoardList() {
 		return boardMapper.selectBoardList();
+	}
+
+	@Override
+	public Board getBoard(Board board) {
+		return boardMapper.selectBoard(board);
 	}
 
 }

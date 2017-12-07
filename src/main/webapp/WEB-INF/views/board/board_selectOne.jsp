@@ -64,7 +64,7 @@
 	
 	// 글목록
 	function list() {
-		location.href = "/test_ohjic";
+		location.href = "/test_ohjic/board_list";
 	}
 	
 	// 글수정
