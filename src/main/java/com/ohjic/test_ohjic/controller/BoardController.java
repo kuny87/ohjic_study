@@ -23,7 +23,7 @@ public class BoardController {
 	public ModelAndView boardList(
 			@ModelAttribute Board board) {
 		
-		ModelAndView mav = new ModelAndView("board/board_list");
+		ModelAndView mav = new ModelAndView("board/list");
 		
 		List<Board> boardList = boardService.getBoardList();
 		
@@ -33,11 +33,11 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/board_selectOne", method = RequestMethod.GET)
+	@RequestMapping(value = "/board_get", method = RequestMethod.GET)
 	public ModelAndView boardSelectOne(
 			@ModelAttribute Board board) {
 		
-		ModelAndView mav = new ModelAndView("board/board_selectOne");
+		ModelAndView mav = new ModelAndView("board/get");
 		
 		board = boardService.getBoard(board);
 		
@@ -50,7 +50,7 @@ public class BoardController {
 	@RequestMapping(value = "/board_regist", method = RequestMethod.GET)
 	public ModelAndView boardRegist() {
 		
-		ModelAndView mav = new ModelAndView("board/board_regist");
+		ModelAndView mav = new ModelAndView("board/regist");
 		
 		return mav;
 	}

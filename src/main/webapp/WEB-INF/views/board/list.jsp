@@ -43,7 +43,7 @@
 			<c:forEach var="list" items="${list}" varStatus="status">
 				<tr>
 					<td>${status.index + 1 }</td>
-					<td><a href="javascript:selectOne(${list.seq})">${list.title }</a></td>
+					<td><a href="javascript:get(${list.seq})">${list.title }</a></td>
 					<td>${list.name }</td>
 					<td>${list.cnt }</td>
 					<td>${list.regDate }</td>
@@ -65,8 +65,8 @@
 	}
 	
 	// 글확인
-	function selectOne(seq) {
-		location.href = '/test_ohjic/board_selectOne?seq=' + seq;
+	function get(seq) {
+		location.href = '/test_ohjic/board_get?seq=' + seq;
 	}
 </script>
 

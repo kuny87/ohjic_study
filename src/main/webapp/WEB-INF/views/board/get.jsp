@@ -86,7 +86,7 @@
 		}).done( function(result) {
 			if (result.success) {
 				alert("수정완료")
-				location.href = "/test_ohjic/board_selectOne?seq=" + seq;
+				location.href = "/test_ohjic/board_get?seq=" + seq;
 			}
 		}).fail(function(result) {
 			alert("수정실패")
