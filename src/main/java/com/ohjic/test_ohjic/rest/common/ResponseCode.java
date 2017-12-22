@@ -1,11 +1,14 @@
-package com.ohjic.test_ohjic.controller.restController.common;
+package com.ohjic.test_ohjic.rest.common;
 
 /**
  * 응답 코드
  */
 public enum ResponseCode {
 	SUCCESS("SUCC00", ""),
-	UNKOWN("ERR0000", "알 수 없는 오류입니다.")
+	UNKOWN("ERR0000", "알 수 없는 오류입니다."),
+	ID_DUPLICATED("ERR0001", "해당 아이디가 이미 존재합니다."),
+	ID_NO_MATCH("ERR0002", "해당 아이디가 없습니다."),
+	PASSWORD_NO_MATCH("ERR0003", "비밀번호가 맞지 않습니다.")
 	;
 
 	/**

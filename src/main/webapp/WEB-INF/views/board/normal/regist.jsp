@@ -1,16 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<fmt:formatDate value="${now}" var="nowDate" pattern="yyyy-MM-dd HH:mm:ss" />
 
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+	<jsp:include page="/WEB-INF/views/index/common.jsp" flush="false" />
 	<title>글쓰기</title>
 </head>
 <style>
-	.center {text-align: center;}
-	
 	table, th, td {
 		border: 1px solid black;
 	}
@@ -41,7 +37,7 @@
 			</tr>
 			<tr>
 				<td>작성자</td>
-				<td><input type="text" id="name" name="name"/></td>
+				<td><span>${user.name}</span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -58,21 +54,24 @@
 		
 		var title = $('#title').val();
 		var content = $('#content').val();
-		var name = $('#name').val();
+		var name = '${user.name}';
+		var regSeq = '${user.userSeq}';
 		
 		$.ajax({
 			dataType : 'json',
 			url: "/test_ohjic/rest/board_regist",
 			method : 'GET',
 			data : {
+			   "type" : "NORMAL",
 			   "title" : title,
 			   "content" : content,
-			   "name" : name
+			   "name" : name,
+			   "regSeq" : regSeq
 			}			
 		}).done( function(result) {
 			if (result.success) {
 				alert("등록완료")
-				location.href = "/test_ohjic/board_list";
+				location.href = "/test_ohjic/board_normal_list";
 			}
 		}).fail(function(result) {
 			alert("등록실패")
@@ -80,8 +79,8 @@
 		
 	}
 	
-	function list(){
-		location.href = "/test_ohjic/board_list";
+	function list() {
+		location.href = "/test_ohjic/board_normal_list";
 	}
 	
 </script>

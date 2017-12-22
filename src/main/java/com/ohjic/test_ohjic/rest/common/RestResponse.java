@@ -1,6 +1,4 @@
-package com.ohjic.test_ohjic.controller.restController.common;
-
-import com.ohjic.test_ohjic.controller.restController.common.ResponseCode;
+package com.ohjic.test_ohjic.rest.common;
 
 /**
  * 공통 Restful JsonResponse 객체

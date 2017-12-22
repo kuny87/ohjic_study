@@ -6,101 +6,130 @@
 <mapper namespace="com.ohjic.test_ohjic.mapper.BoardMapper">
 	
 	<resultMap id="BoardMap" type="com.ohjic.test_ohjic.model.Board">
-	    <id column="seq" jdbcType="INTEGER" property="seq" />
-	    <id column="title" jdbcType="VARCHAR" property="title" />
-	    <id column="content" jdbcType="VARCHAR" property="content" />
-	    <id column="name" jdbcType="VARCHAR" property="name" />
-	    <id column="cnt" jdbcType="INTEGER" property="cnt" />
-	    <id column="reg_date" jdbcType="VARCHAR" property="regDate" />
-	    <id column="del_yn" jdbcType="VARCHAR" property="delYn" />
+	    <id column="board_seq" jdbcType="INTEGER" property="boardSeq" />
+	    <result column="title" jdbcType="VARCHAR" property="title" />
+	    <result column="content" jdbcType="VARCHAR" property="content" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="cnt" jdbcType="INTEGER" property="cnt" />
+	    <result column="reg_seq" jdbcType="INTEGER" property="regSeq" />
+	    <result column="reg_date" jdbcType="VARCHAR" property="regDate" />
+	    <result column="del_yn" jdbcType="VARCHAR" property="delYn" />
+	    <result column="reply_count" jdbcType="INTEGER" property="replyCount" />
+	    <collection property="boardReplyList" resultMap="com.ohjic.test_ohjic.mapper.BoardReplyMapper.BoardReplyMap" columnPrefix="reply_" />
   	</resultMap>
-	
+  	
 	
 	<insert id="insertBoard" parameterType="com.ohjic.test_ohjic.model.Board">
-		insert into board_free (title, content, name) 
-		values (#{title},#{content},#{name})
+		insert into board (type, title, content, name, reg_seq) 
+		values (#{type},#{title},#{content},#{name},#{regSeq})
 	</insert>
 
 	<update id="updateBoard" parameterType="com.ohjic.test_ohjic.model.Board">
-		update board_free set title=#{title}, content=#{content} where seq=#{seq}
+		update 
+			board 
+		set 
+			title=#{title}, content=#{content} 
+		where 
+			board_seq = #{boardSeq}
 	</update>
 
-	<delete id="deleteBoard" parameterType="int">
-		delete from board_free where seq=#{seq}
-	</delete>
+	<update id="deleteBoard" parameterType="int">
+		update 
+			board
+		set 
+			del_yn = 'T'
+		where 
+			board_seq = #{boardSeq}
+	</update>
 
-	<select id="selectBoardList" resultMap="BoardMap">
-		select * from board_free
-	</select>
-	
 	<select id="selectBoard" parameterType="com.ohjic.test_ohjic.model.Board" resultMap="BoardMap">
-		select * from board_free where seq = #{seq} 
+		select 
+			bn.board_seq as board_seq,
+			bn.type as type,
+			bn.title as title,
+			bn.content as content,
+			bn.name as name,
+			bn.cnt as cnt,
+			bn.reg_seq as reg_seq,
+			bn.reg_date as reg_date,
+			bn.del_yn as del_yn,
+			br.board_reply_seq as reply_board_reply_seq,
+			br.board_seq as reply_board_seq,
+			br.reg_seq as reply_reg_seq,
+			br.reply_content as reply_reply_content,
+			br.reg_date as reply_reg_date,
+			br.del_yn as reply_del_yn,
+			br.reparent as reply_reparent,
+			br.redepth as reply_redepth,
+			br.reorder as reply_reorder,
+			u.`name` as reply_reg_name
+		from board bn 
+		left outer join board_reply br on br.board_seq = bn.board_seq and br.board_type = #{type} and br.del_yn = 'F'
+		left outer join user u on u.user_seq = br.reg_seq
+		where bn.board_seq = #{boardSeq} and bn.type = #{type}
+			and bn.del_yn = 'F'
+		order by reply_reorder asc
 	</select>
 	
-	
-	
-	
-	<!-- select * from member where id=? -->
-	<!-- <select id="b_search" resultType="test.com.spring.board.model.BoardDTO">
-		select * from board where num = #{num}
+	<select id="selectBoardCount" parameterType="com.ohjic.test_ohjic.search.BoardSearch" resultType="int">
+		select count(*) from (
+			select 
+				bn.board_seq as board_seq,
+				bn.type as type,
+				bn.title as title,
+				bn.content as content,
+				bn.name as name,
+				bn.cnt as cnt,
+				bn.reg_seq as reg_seq,
+				bn.reg_date as reg_date,
+				bn.del_yn as del_yn,
+				reply_count.cnt as reply_count
+			from board bn
+			left outer join (select count(1) as cnt, board_seq, reg_seq from board_reply br where br.board_type = #{type} and br.del_yn = 'F' group by br.board_seq) as reply_count on reply_count.board_seq = bn.board_seq
+			left outer join user u on u.user_seq = reply_count.reg_seq
+			where ${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
+				and bn.type = #{type}
+				and bn.del_yn = 'F'
+				<if test="startDate != null and endDate != null">
+					and bn.reg_date between #{startDate} and #{endDate}
+				</if>
+			order by board_seq desc
+		) a
+		
 	</select>
-
-
-	select * from member where name like ?";
-	<select id="b_searchList" resultType="test.com.spring.board.model.BoardDTO"
-		parameterType="hashmap">
-		select * from 
-		(select rownum rnum,num,title,content,name,regDate,searchCount,reply,replynum,replystep,replylevel 
-		from ((select * from board 
-		<if test="searchKey == 'title'">
-		where title LIKE #{searchWord} 
-		</if> 
-		<if test="searchKey != 'title'">
-		where name LIKE #{searchWord} 
-		</if>
-		order by replynum desc, replystep asc))) where rnum between #{startRow} and #{endRow}
+	
+	<select id="selectBoardList" parameterType="com.ohjic.test_ohjic.search.BoardSearch" resultMap="BoardMap">
+		select 
+			bn.board_seq as board_seq,
+			bn.type as type,
+			bn.title as title,
+			bn.content as content,
+			bn.name as name,
+			bn.cnt as cnt,
+			bn.reg_seq as reg_seq,
+			bn.reg_date as reg_date,
+			bn.del_yn as del_yn,
+			reply_count.cnt as reply_count
+		from board bn
+		left outer join (select count(1) as cnt, board_seq, reg_seq from board_reply br where br.board_type = #{type} and br.del_yn = 'F' group by br.board_seq) as reply_count on reply_count.board_seq = bn.board_seq
+		left outer join user u on u.user_seq = reply_count.reg_seq
+		where ${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
+			and bn.type = #{type}
+			and bn.del_yn = 'F'
+			<if test="startDate != null and endDate != null">
+				and bn.reg_date between #{startDate} and #{endDate}
+			</if>
+		order by board_seq desc
+		LIMIT #{startRow}, #{boardSize}
 	</select>
 	
-	
-	<insert id="b_reply_insert" parameterType="test.com.spring.board.model.BoardDTO">
-		insert into board(num,title,content,name,searchCount,reply,replynum,replystep,replylevel) 
-		values(seq_board_num.nextval,#{title},#{content},#{name},0,#{reply},#{replyNum},#{replyStep},#{replyLevel})
-	</insert>
-	
-	
-	<update id="b_reply_update" parameterType="test.com.spring.board.model.BoardDTO">
-		update board set replystep=replystep+1 
-		where replynum=#{replyNum} and replystep > #{replyStep}
+	<update id="addCount" parameterType="com.ohjic.test_ohjic.model.Board">
+		update 
+			board
+		set 
+			cnt = cnt + 1 
+		where 
+			board_seq = #{boardSeq}
 	</update>
-	
-	
-	<select id="b_reply_select" parameterType="test.com.spring.board.model.BoardDTO"
-		resultType="test.com.spring.board.model.BoardDTO">
-		select replynum,replystep,replylevel 
-		from board where num=#{num}
-	</select>
-	
-	
-	<select id="b_reply_search" parameterType="test.com.spring.board.model.BoardDTO">
-		select * from (select rownum rnum,num,title,content,name,regDate,searchCount,reply,replynum,replystep,replylevel 
-		from ((select * from board 
-	</select>
-	
-	
-	<select id="b_reply_searchList" resultType="int"
-		parameterType="hashmap">
-		select count(*) totalRows from board 
-		<if test="searchKey == 'title'">
-		where title LIKE #{searchWord}
-		</if>
-		<if test="searchKey != 'title'">
-		where name LIKE #{searchWord}
-		</if>
-	</select>
-	
-	
-	<select id="b_reply_totalRows" resultType="int">
-		select count(*) totalRows from board
-	</select> -->
-	
+
 </mapper>

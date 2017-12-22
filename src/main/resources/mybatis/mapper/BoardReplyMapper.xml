@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ohjic.test_ohjic.mapper.BoardReplyMapper">
+	
+  	<resultMap id="BoardReplyMap" type="com.ohjic.test_ohjic.model.BoardReply">
+	    <id column="board_reply_seq" jdbcType="INTEGER" property="boardReplySeq" />
+	    <id column="board_seq" jdbcType="INTEGER" property="boardSeq" />
+	    <id column="reg_seq" jdbcType="INTEGER" property="regSeq" />
+	    <id column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+	    <id column="reg_date" jdbcType="VARCHAR" property="regDate" />
+	    <id column="board_type" jdbcType="VARCHAR" property="boardType" />
+	    <id column="reg_name" jdbcType="VARCHAR" property="regName" />
+	    <id column="group_seq" jdbcType="INTEGER" property="groupSeq" />
+	    <id column="reparent" jdbcType="INTEGER" property="reparent" />
+	    <id column="redepth" jdbcType="INTEGER" property="redepth" />
+	    <id column="reorder" jdbcType="INTEGER" property="reorder" />
+	    <id column="del_yn" jdbcType="VARCHAR" property="delYn" />
+  	</resultMap>
+	
+	
+	<insert id="insertBoardReply" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		insert into board_reply (board_type, board_seq, reg_seq, reply_content, group_seq, redepth, reorder)
+		values (#{boardType},#{boardSeq},#{regSeq},#{replyContent},#{groupSeq},0,#{reorder})
+	</insert>
+	
+
+	<insert id="insertBoardReReply" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		insert into board_reply (board_type, board_seq, reg_seq, reply_content, group_seq, reparent, redepth, reorder)
+		values (#{boardType},#{boardSeq},#{regSeq},#{replyContent},#{groupSeq},#{reparent},#{redepth}, #{reorder})
+	</insert>
+
+	
+	<update id="updateReplyReorderAdd" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		update
+			board_reply
+		set
+			reorder = reorder + 1
+		where
+			board_reply_seq != #{boardReplySeq}
+			and reorder <![CDATA[>=]]> #{reorder}
+			and board_seq = #{boardSeq}
+<!-- 			and del_yn = 'F' -->
+	</update>
+	
+
+	<update id="updateBoardReply" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		update 
+			board_reply 
+		set 
+			reply_content = #{replyContent}
+		where 
+			board_reply_seq = #{boardReplySeq}
+	</update>
+	
+
+	<update id="deleteBoardReply" parameterType="int">
+		update 
+			board_reply 
+		set 
+			del_yn = 'T'
+		where 
+			board_reply_seq = #{boardReplySeq}
+	</update>
+	
+	
+	<select id="selectBoardReply" parameterType="com.ohjic.test_ohjic.model.BoardReply" resultMap="BoardReplyMap">
+		select 
+			reorder
+		from 
+			board_reply
+		where 
+			board_reply_seq = #{boardReplySeq}
+<!-- 			and del_yn = 'F' -->
+	</select>
+	
+	<select id="selectMaxReply" resultMap="BoardReplyMap">
+		select 
+			* 
+		from 
+			board_reply 
+		where 
+			board_reply_seq = (
+				select
+					MAX(board_reply_seq) board_reply_seq
+				from
+					board_reply
+			)
+	</select>
+	
+	
+	<update id="updateGroupSeq" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		update
+			board_reply
+		set
+			group_seq = #{boardReplySeq}
+		where
+			board_reply_seq = #{boardReplySeq} 
+	</update>
+	
+	
+	<!-- 최건희 --> 
+	<update id="updateGroupSeqChilde" parameterType="com.ohjic.test_ohjic.model.BoardReply">
+		update
+			board_reply
+		set
+			group_seq = #{groupSeq}
+		where
+			board_reply_seq = #{boardReplySeq} 
+	</update>
+	
+	
+	<select id="selectReparentGroupSeq" parameterType="com.ohjic.test_ohjic.model.BoardReply" resultMap="BoardReplyMap">
+		select
+			board_reply_seq, 
+			group_seq
+		from
+			board_reply
+		where
+			board_reply_seq = #{reparent}
+	</select>
+	
+	<select id="selectReplyReorder" parameterType="com.ohjic.test_ohjic.model.BoardReply" resultType="int">
+		select 
+			if(reorder is null, 0, max(reorder)+1) reorder 
+		from 
+			board_reply 
+		where 
+			board_seq = #{boardSeq} 
+<!-- 			and del_yn = 'F' -->
+	</select>	
+	
+	
+	<select id="selectReReplyReorder" parameterType="com.ohjic.test_ohjic.model.BoardReply" resultType="int">
+		select 
+			max(reorder)+1 reorder 
+		from 
+			board_reply 
+		where 
+			board_reply_seq = #{reparent}
+			or reparent = #{reparent} 
+<!-- 			and del_yn = 'F' -->
+	</select>
+	
+	
+	<select id="selectGroupDepthCheck" parameterType="com.ohjic.test_ohjic.model.BoardReply" resultType="int">
+		select
+			if(reorder is null, 0, max(reorder)+1) reorder
+		from
+			board_reply
+		where
+			group_seq = #{groupSeq}
+			and redepth <![CDATA[>=]]> #{redepth}
+			and board_reply_seq <![CDATA[>=]]> #{boardReplySeq}
+			and reparent <![CDATA[>=]]> #{reparent}
+	</select>
+	
+	<!-- select * from member where id=? -->
+	<!-- 
+	<insert id="b_reply_insert" parameterType="test.com.spring.board.model.BoardDTO">
+		insert into board(num,title,content,name,searchCount,reply,replynum,replystep,replylevel) 
+		values(seq_board_num.nextval,#{title},#{content},#{name},0,#{reply},#{replyNum},#{replyStep},#{replyLevel})
+	</insert>
+	
+	
+	<update id="b_reply_update" parameterType="test.com.spring.board.model.BoardDTO">
+		update board set replystep=replystep+1 
+		where replynum=#{replyNum} and replystep > #{replyStep}
+	</update>
+	
+	
+	<select id="b_reply_select" parameterType="test.com.spring.board.model.BoardDTO"
+		resultType="test.com.spring.board.model.BoardDTO">
+		select replynum,replystep,replylevel 
+		from board where num=#{num}
+	</select>
+	
+	
+	<select id="b_reply_search" parameterType="test.com.spring.board.model.BoardDTO">
+		select * from (select rownum rnum,num,title,content,name,regDate,searchCount,reply,replynum,replystep,replylevel 
+		from ((select * from board 
+	</select>
+	
+	
+	<select id="b_reply_searchList" resultType="int"
+		parameterType="hashmap">
+		select count(*) totalRows from board 
+		<if test="searchKey == 'title'">
+		where title LIKE #{searchWord}
+		</if>
+		<if test="searchKey != 'title'">
+		where name LIKE #{searchWord}
+		</if>
+	</select>
+	
+	
+	<select id="b_reply_totalRows" resultType="int">
+		select count(*) totalRows from board
+	</select> -->
+	
+</mapper>

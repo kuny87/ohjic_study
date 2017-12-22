@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.ohjic.test_ohjic.mapper.BoardMapper;
 import com.ohjic.test_ohjic.model.Board;
+import com.ohjic.test_ohjic.page.Paging;
+import com.ohjic.test_ohjic.search.BoardSearch;
 import com.ohjic.test_ohjic.service.BoardService;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	public static final int PAGESIZE = 10; // 게시판 하단에 보이게 될 페이지 개수 ==> (1 2 3 다음) 이런식으로, 글 게시판이든 사진 게시판이든 똑같이 10개로 고정
+	
 	@Autowired
 	private BoardMapper boardMapper;
 	
@@ -27,16 +31,25 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean removeBoard(Board board) {
-		return false;
+		return boardMapper.deleteBoard(board) == 1;
 	}
 
 	@Override
-	public List<Board> getBoardList() {
-		return boardMapper.selectBoardList();
+	public Paging<Board> getBoardList(BoardSearch boardSearch) {
+		
+		int totalBoard = boardMapper.selectBoardCount(boardSearch);
+		List<Board> boardList = boardMapper.selectBoardList(boardSearch);
+		
+		Paging<Board> paging = new Paging<Board>(PAGESIZE, boardSearch.getBoardSize(), boardSearch.getPageNo(), totalBoard, boardList);
+		
+		return paging;
 	}
 
 	@Override
 	public Board getBoard(Board board) {
+		
+		boardMapper.addCount(board);
+		
 		return boardMapper.selectBoard(board);
 	}
 

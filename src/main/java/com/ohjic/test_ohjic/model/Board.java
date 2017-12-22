@@ -1,27 +1,37 @@
 package com.ohjic.test_ohjic.model;
 
+import java.util.List;
+
+import com.ohjic.test_ohjic.search.type.EBoardType;
+
 public class Board {
 
-	int seq;
-	
-	String title;
-	
-	String content;
-	
-	String name;
-	
-	int cnt;
-	
-	String regDate;
-	
-	String delYn;
+	private Integer boardSeq;
+	private EBoardType type;
+	private String title;
+	private String content;
+	private String name;
+	private Integer cnt;
+	private Integer regSeq;
+	private String regDate;
+	private String delYn;
+	private Integer replyCount;
+	private List<BoardReply> boardReplyList;
 
-	public int getSeq() {
-		return seq;
+	public Integer getBoardSeq() {
+		return boardSeq;
 	}
 
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setBoardSeq(Integer boardSeq) {
+		this.boardSeq = boardSeq;
+	}
+
+	public EBoardType getType() {
+		return type;
+	}
+
+	public void setType(EBoardType type) {
+		this.type = type;
 	}
 
 	public String getTitle() {
@@ -48,12 +58,20 @@ public class Board {
 		this.name = name;
 	}
 
-	public int getCnt() {
+	public Integer getCnt() {
 		return cnt;
 	}
 
-	public void setCnt(int cnt) {
+	public void setCnt(Integer cnt) {
 		this.cnt = cnt;
+	}
+
+	public Integer getRegSeq() {
+		return regSeq;
+	}
+
+	public void setRegSeq(Integer regSeq) {
+		this.regSeq = regSeq;
 	}
 
 	public String getRegDate() {
@@ -70,6 +88,22 @@ public class Board {
 
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
+	}
+
+	public List<BoardReply> getBoardReplyList() {
+		return boardReplyList;
+	}
+
+	public void setBoardReplyList(List<BoardReply> boardReplyList) {
+		this.boardReplyList = boardReplyList;
+	}
+
+	public Integer getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(Integer replyCount) {
+		this.replyCount = replyCount;
 	}
 	
 }
