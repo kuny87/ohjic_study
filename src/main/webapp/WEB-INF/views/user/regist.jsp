@@ -56,7 +56,7 @@
 			} else if ($pw.val() == "") {
 				validateMessage = '비밀번호를 입력해 주세요.';
 				validateFocus = pw;
-			} else if ($pw.val() != pwConfirm.val()) {
+			} else if ($pw.val() != $pwConfirm.val()) {
 				validateMessage = '비밀번호가 일치하지 않습니다.';
 				validateFocus = pwConfirm;
 			} else if ($userName.val() == "") {
@@ -76,10 +76,10 @@
 				url: "/test_ohjic/rest/user_regist",
 				method : 'GET',
 				data : {
-				   "id" : id.val(),
-				   "pw" : pw.val(),
-				   "pwConfirm" : pwConfirm.val(),
-				   "name" : userName.val()
+				   "id" : $id.val(),
+				   "pw" : $pw.val(),
+				   "pwConfirm" : $pwConfirm.val(),
+				   "name" : $userName.val()
 				}			
 			}).done( function(result) {
 				if (result.success) {
