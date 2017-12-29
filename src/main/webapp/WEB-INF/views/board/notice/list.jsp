@@ -6,7 +6,7 @@
 <head>
 	<jsp:include page="/WEB-INF/views/index/common.jsp" flush="false" />
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<title>자유게시판</title>
+	<title>공지사항</title>
 </head>
 
 <style>
@@ -31,7 +31,7 @@
 </div>
 
 <div>
-	<h1 class="center">자유게시판</h1>
+	<h1 class="center">공지사항</h1>
 </div>
 
 <div>
@@ -183,15 +183,15 @@
 	
 	// 글쓰기
 	function regist() {
-		location.href = contextPath + '/board_normal_regist';
+		location.href = contextPath + '/board_notice_regist';
 	}
 	
 	// 글확인
 	function get(boardSeq) {
 		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_normal_get?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
+			location.href = contextPath + '/board_notice_get?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
 		}else {
-			location.href = contextPath + '/board_normal_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;	
+			location.href = contextPath + '/board_notice_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;	
 		}
 	}
 	
@@ -214,9 +214,9 @@
 		var endDate = $('#endDate').val();
 		
 		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_normal_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
+			location.href = contextPath + '/board_notice_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
 		}else {
-			location.href = contextPath + '/board_normal_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
+			location.href = contextPath + '/board_notice_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
 		}
 	}
 	

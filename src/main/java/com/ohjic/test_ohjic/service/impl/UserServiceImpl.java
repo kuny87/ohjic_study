@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean removeUser(User user) {
-		return false;
+		return userMapper.deleteUser(user) == 1;
 	}
 
 	@Override

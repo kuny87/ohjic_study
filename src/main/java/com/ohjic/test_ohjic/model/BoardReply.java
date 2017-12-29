@@ -5,12 +5,12 @@ import com.ohjic.test_ohjic.search.type.EBoardType;
 public class BoardReply {
 
 	private Integer boardReplySeq;
+	private EBoardType boardType;
 	private Integer boardSeq;
 	private Integer regSeq;
 	private String regName;
 	private String replyContent;
 	private String regDate;
-	private EBoardType boardType;
 	private String delYn;
 	
 	private Integer groupSeq;

@@ -201,9 +201,9 @@
 	// 글목록
 	function list() {
 		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_normal_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=' + pageNo;
+			location.href = contextPath + '/board_faq_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=' + pageNo;
 		}else {
-			location.href = contextPath + '/board_normal_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=' + pageNo;	
+			location.href = contextPath + '/board_faq_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=' + pageNo;	
 		}
 	}
 	
@@ -268,7 +268,7 @@
 			}).done( function(result) {
 				if (result.success) {
 					alert("삭제완료")
-					location.href = contextPath + "/board_normal_list";
+					location.href = contextPath + "/board_faq_list";
 				}
 			}).fail(function(result) {
 				alert("삭제실패")
@@ -305,7 +305,7 @@
 			url: contextPath + "/rest/board_reply_regist",
 			method : 'GET',
 			data : {
-			   "boardType" : "NORMAL",
+			   "boardType" : "FAQ",
 			   "regSeq" : userSeq,
 			   "boardSeq" : boardSeq,
 			   "replyContent" : $replyContent.val()
@@ -313,7 +313,7 @@
 		}).done( function(result) {
 			if (result.success) {
 				alert("등록완료")
-				location.href = contextPath + "/board_normal_get?boardSeq=" + boardSeq;
+				location.href = contextPath + "/board_faq_get?boardSeq=" + boardSeq;
 			}
 		}).fail(function(result) {
 			alert("등록실패")
@@ -446,7 +446,7 @@
 			method : 'GET',
 			data : {
 			   "boardSeq" : $boardSeq.val(),
-			   "boardType" : "NORMAL",
+			   "boardType" : "FAQ",
 			   "regSeq" : userSeq,
 			   "replyContent" : $rReplyContent.val(),
 			   "reparent" : seq,

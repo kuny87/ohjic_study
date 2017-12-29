@@ -27,8 +27,6 @@ public class BoardReplyRestController {
 		RestResponse response = new RestResponse();
 		response.setSuccess(true);
 		
-		boardReply.setBoardType(EBoardType.NORMAL);
-		
 		try {
 			boardReplyService.registBoardReply(boardReply);
 		} catch (Exception e) {

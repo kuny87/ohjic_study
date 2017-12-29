@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<fmt:formatDate var="nowDate" value="${now}" pattern="yyyy-MM-dd" />
 
 <html>
 <head>
@@ -22,12 +23,12 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>id</td>
+					<td>ID</td>
 					<td><input type="text" id="id" name="id" /></td>
 				</tr>
 				<tr>
-					<td>pw</td>
-					<td><input type="password" id="pw" name="name"/></td>
+					<td>PW</td>
+					<td><input type="password" id="pw" name="name" onkeydown="onEnter();"/></td>
 				</tr>
 			</tbody>
 			<tfoot>
@@ -41,27 +42,47 @@
 		</table>
 	</div>
 	
+	
 	<script>
+	
 		function list() {
 			location.href = "/test_ohjic/board_normal_list";
 		}
-		
+	
 		function login() {
 			
-			var id = $('#id').val();
-			var pw = $('#pw').val();
+			var $id = $('#id');
+			var $pw = $('#pw');
+			var validateMessage = null;
+			var validateFocus = null;
+			
+			// input 데이터 체크 및 팝업text 입력, 포커스 입력
+			if ($id.val() == "") {
+				validateMessage = '아이디를 입력해 주세요.';
+				validateFocus = id;
+			} else if ($pw.val() == "") {
+				validateMessage = '패스워드를 입력해 주세요.';
+				validateFocus = pw;
+			}
+			
+			// input 데이터 체크 및 팝업창 띄워주고 포커스
+			if(validateMessage != null) {
+				validateFocus.focus();
+				alert(validateMessage);
+				return false;
+			}
 			
 			$.ajax({
 				dataType : 'json',
 				url: "/test_ohjic/rest/user_login",
 				method : 'GET',
 				data : {
-				   "id" : id,
-				   "pw" : pw
+				   "id" : $id.val(),
+				   "pw" : $pw.val()
 				}
 			}).done( function(result) {
 				if (result.success) {
-					location.href = "/test_ohjic/user_login?id=" + id;
+					location.href = "/test_ohjic/main?id=" + $id.val();
 				}else {
 					alert(result.message);
 				}
@@ -69,12 +90,20 @@
 				alert("로그인 실패")
 			});
 		}
-		
+	
 		function user_regist() {
 			location.href = "/test_ohjic/user_regist";
 		}
-	
+		
+		
+		function onEnter(){
+			var keyCode = window.event.keyCode;
+			if(keyCode == 13) {
+				login();
+			}
+		}
+		
 	</script>
-	
+
 </body>
 </html>

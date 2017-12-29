@@ -7,7 +7,7 @@
 	<title>회원가입</title>
 </head>
 <body>
-	<button onclick="javascript:home()">home</button>
+	<button onclick="javascript:login()">로그인하러 가기</button>
 	
 	<div>
 		<table>
@@ -34,8 +34,8 @@
 	
 	<script>
 
-		// 홈화면
-		function home() {
+		// 로그인 화면
+		function login() {
 			location.href = "/test_ohjic";
 		}
 		
@@ -50,7 +50,7 @@
 			var validateFocus = null;
 
 			// input 데이터 체크 및 팝업text 입력, 포커스 입력
-			if ($id.val() == "") {
+			 if ($id.val() == "") {
 				validateMessage = '아이디를 입력해 주세요.';
 				validateFocus = id;
 			} else if ($pw.val() == "") {

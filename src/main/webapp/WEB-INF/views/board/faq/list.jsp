@@ -183,15 +183,15 @@
 	
 	// 글쓰기
 	function regist() {
-		location.href = contextPath + '/board_normal_regist';
+		location.href = contextPath + '/board_faq_regist';
 	}
 	
 	// 글확인
 	function get(boardSeq) {
 		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_normal_get?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
+			location.href = contextPath + '/board_faq_get?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
 		}else {
-			location.href = contextPath + '/board_normal_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;	
+			location.href = contextPath + '/board_faq_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;	
 		}
 	}
 	
@@ -214,9 +214,9 @@
 		var endDate = $('#endDate').val();
 		
 		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_normal_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
+			location.href = contextPath + '/board_faq_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
 		}else {
-			location.href = contextPath + '/board_normal_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
+			location.href = contextPath + '/board_faq_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
 		}
 	}
 	

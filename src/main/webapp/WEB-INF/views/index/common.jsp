@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <fmt:formatDate value="${now}" var="nowDate" pattern="yyyy-MM-dd HH:mm:ss" />
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="resourcesPath" value="${contextPath}/resources"/>
   
 <style>
 	.center {text-align: center;}
@@ -16,6 +19,10 @@
 </style>
 
 <script>
+
+	var contextPath = '${contextPath}',
+		resourcePath = '${resourcePath}';
+
 	var userId = '${user.id}';
 	if(userId == null || userId == ''){
 		location.href = '/test_ohjic';

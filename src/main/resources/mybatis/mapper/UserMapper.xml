@@ -26,11 +26,11 @@
 	</update>
 
 	<delete id="deleteUser" parameterType="int">
-		delete from user where user_seq = #{userSeq}
+		update user set del_yn = 'T' where user_seq = #{userSeq}
 	</delete>
 
 	<select id="selectUser" parameterType="com.ohjic.test_ohjic.model.User" resultMap="UserMap">
-		select * from user where id = #{id}
+		select * from user where id = #{id} and del_yn = 'F'
 	</select>
 	
 	

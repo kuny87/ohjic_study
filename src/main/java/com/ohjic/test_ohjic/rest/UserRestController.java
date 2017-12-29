@@ -3,6 +3,9 @@ package com.ohjic.test_ohjic.rest;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +27,10 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 	
-	
 	@RequestMapping(value = "/user_regist", method = RequestMethod.GET, produces = "application/json")
 	public RestResponse userRegist(
-			@ModelAttribute User user) throws UnsupportedEncodingException, NoSuchAlgorithmException, IdDuplicatedException {
+			@ModelAttribute User user
+			) throws UnsupportedEncodingException, NoSuchAlgorithmException, IdDuplicatedException {
 
 		RestResponse response = new RestResponse();
 		response.setSuccess(true);
@@ -38,6 +41,33 @@ public class UserRestController {
 			e.printStackTrace();
 			response.setSuccess(false);
 			response.setResCode(ResponseCode.ID_DUPLICATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+			response.setResCode(ResponseCode.UNKOWN);
+		}
+		
+		return response;
+	}
+	
+	
+	@RequestMapping(value = "/user_pwCheck", method = RequestMethod.GET, produces = "application/json")
+	public RestResponse userPwCheck(
+			@ModelAttribute User user) {
+
+		RestResponse response = new RestResponse();
+		response.setSuccess(true);
+		
+		try {
+			userService.getUserCheck(user);
+		} catch (IdNoMatchException e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+			response.setResCode(ResponseCode.ID_NO_MATCH);
+		} catch (PasswordNoMatchException e) {
+			e.printStackTrace();
+			response.setSuccess(false);
+			response.setResCode(ResponseCode.PASSWORD_NO_MATCH);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setSuccess(false);
@@ -87,13 +117,15 @@ public class UserRestController {
 	
 	@RequestMapping(value = "/user_login", method = RequestMethod.GET, produces = "application/json")
 	public RestResponse userLogin(
-			@ModelAttribute User user) throws NoSuchAlgorithmException, UnsupportedEncodingException, IdNoMatchException, PasswordNoMatchException {
+			@ModelAttribute User user,
+			HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException, IdNoMatchException, PasswordNoMatchException {
 		
 		RestResponse response = new RestResponse();
 		response.setSuccess(true);
 		
 		try {
 			userService.getUserCheck(user);
+			user = userService.getUser(user);
 		} catch (IdNoMatchException e) {
 			e.printStackTrace();
 			response.setSuccess(false);
@@ -107,6 +139,9 @@ public class UserRestController {
 			response.setSuccess(false);
 			response.setResCode(ResponseCode.UNKOWN);
 		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
 		
 		return response;
 	}

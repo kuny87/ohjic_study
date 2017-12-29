@@ -8,7 +8,11 @@ public enum ResponseCode {
 	UNKOWN("ERR0000", "알 수 없는 오류입니다."),
 	ID_DUPLICATED("ERR0001", "해당 아이디가 이미 존재합니다."),
 	ID_NO_MATCH("ERR0002", "해당 아이디가 없습니다."),
-	PASSWORD_NO_MATCH("ERR0003", "비밀번호가 맞지 않습니다.")
+	PASSWORD_NO_MATCH("ERR0003", "비밀번호가 맞지 않습니다."),
+	EMPTY_ID("ERR0004", "아이디를 입력해 주세요."),
+	EMPTY_PW("ERR0005", "비밀번호를 입력해 주세요."),
+	EMPTY_NAME("ERR0006", "이름을 입력해 주세요."),
+	INVALID_INPUT_VALUE("ERR0007", "유효하지 않은 입력값입니다.")
 	;
 
 	/**

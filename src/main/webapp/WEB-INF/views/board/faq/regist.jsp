@@ -80,7 +80,7 @@
 			url: contextPath + "/rest/board_regist",
 			method : 'GET',
 			data : {
-			   "type" : "NORMAL",
+			   "type" : "FAQ",
 			   "title" : $title.val(),
 			   "content" : $content.val(),
 			   "name" : name,
@@ -89,7 +89,7 @@
 		}).done( function(result) {
 			if (result.success) {
 				alert("등록완료")
-				location.href = contextPath + "/board_normal_list";
+				location.href = contextPath + "/board_faq_list";
 			}
 		}).fail(function(result) {
 			alert("등록실패")
@@ -98,7 +98,7 @@
 	}
 	
 	function list() {
-		location.href = contextPath + "/board_normal_list";
+		location.href = contextPath + "/board_faq_list";
 	}
 	
 </script>
