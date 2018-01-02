@@ -6,7 +6,7 @@
 <head>
 	<jsp:include page="/WEB-INF/views/index/common.jsp" flush="false" />
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<title>자유게시판</title>
+	<title>프로필</title>
 </head>
 
 <style>
@@ -31,7 +31,7 @@
 </div>
 
 <div>
-	<h1 class="center">자유게시판</h1>
+	<h1 class="center">프로필</h1>
 </div>
 
 <div>
@@ -51,16 +51,6 @@
 			</c:forEach>
 		</select>
 
-		<fmt:parseDate value="${startDate}" var="sDate" pattern="yyyy-MM-dd" />
-		<fmt:parseDate value="${endDate}" var="eDate" pattern="yyyy-MM-dd" />
-		<fmt:formatDate value="${sDate}" var="sDateStr" pattern="yyyy-MM-dd" />
-		<fmt:formatDate value="${eDate}" var="eDateStr" pattern="yyyy-MM-dd" />
-		
-		<label for="startDate">from</label>
-		<input type="text" class="datepicker" id="startDate" name="startDate" value="${sDateStr}" >
-		<label for="endDate">to</label>
-		<input type="text" class="datepicker" id="endDate" name="endDate" value="${eDateStr}" >
-		
 		<select id="searchType" name="searchType">
 			<c:forEach var="list" items="${searchTypeList}">
 				<c:choose>
@@ -105,10 +95,6 @@
 					<tr>
 						<td>${paging.totalBoard - (paging.pageNo-1)*paging.boardSize - status.index }</td>
 						<td><a href="javascript:get(${board.boardSeq})">${board.title } 
-						<c:if test="${board.replyCount ne null}">
-						[${board.replyCount }]
-						</c:if>
-						</a></td>
 						<td>${board.name }</td>
 						<td>${board.cnt }</td>
 						<fmt:parseDate value="${board.regDate}" var="regDate" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -138,16 +124,11 @@
 		</c:if>
 	</div>
 		
-	<div class="center" style="margin-top: 30px;">
-		<button onclick="regist()">글쓰기</button>
-	</div>
 </div>
 
 <script>
 
 	var boardSize = $('#boardSize').val();
-	var startDate = $('#startDate').val();
-	var endDate = $('#endDate').val();
 	var searchType = $('#searchType').val();
 	var keyword = $('#keyword').val();
 	var pageNo = '${paging.pageNo}';
@@ -155,11 +136,7 @@
 	//페이지 버튼 클릭 시
 	var pageModule = (function() {
 		function movePage(param) {
-			if(startDate != '' && endDate != ''){
-				location.href = location.pathname + "?startDate=" + startDate + "&endDate=" + endDate + "&searchType=" + param.searchType + "&keyword=" + param.keyword + "&boardSize=" + param.boardSize + "&pageNo=" + param.pageNo;				
-			}else {
-				location.href = location.pathname + "?searchType=" + param.searchType + "&keyword=" + param.keyword + "&boardSize=" + param.boardSize + "&pageNo=" + param.pageNo;
-			}
+			location.href = location.pathname + "?searchType=" + param.searchType + "&keyword=" + param.keyword + "&boardSize=" + param.boardSize + "&pageNo=" + param.pageNo;
 		}
 	
 		return {
@@ -181,18 +158,9 @@
 	})();
 
 	
-	// 글쓰기
-	function regist() {
-		location.href = contextPath + '/board_faq_regist';
-	}
-	
 	// 글확인
 	function get(boardSeq) {
-		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_faq_get?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
-		}else {
-			location.href = contextPath + '/board_faq_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;	
-		}
+		location.href = contextPath + '/board_faq_get?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&boardSeq=' + boardSeq + '&pageNo=' + pageNo;
 	}
 	
 	
@@ -210,14 +178,8 @@
 		var boardSize = $('#boardSize').val();
 		var searchType = $('#searchType').val();
 		var keyword = $('#keyword').val();
-		var startDate = $('#startDate').val();
-		var endDate = $('#endDate').val();
 		
-		if(startDate != '' && endDate != ''){
-			location.href = contextPath + '/board_faq_list?startDate=' + startDate + '&endDate=' + endDate + '&searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
-		}else {
-			location.href = contextPath + '/board_faq_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
-		}
+		location.href = contextPath + '/board_faq_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';
 	}
 	
 	function logout() {
@@ -232,43 +194,6 @@
 		location.href = contextPath + '/user_mypage';
 	}
 	
-	
-	// jquery ui 달력
-	$( function() {
-		var dateFormat = "yy-mm-dd",
-		    startDate = $( "#startDate" )
-		      .datepicker({
-		        defaultDate: "+1w",
-		        changeMonth: true,
-		        numberOfMonths: 3
-		      })
-		      .on( "change", function() {
-		    	 endDate.datepicker( "option", "minDate", getDate(this) );
-		      }),
-		    endDate = $( "#endDate" ).datepicker({
-		      defaultDate: "+1w",
-		      changeMonth: true,
-		      numberOfMonths: 3
-		    })
-		    .on( "change", function() {
-		      startDate.datepicker( "option", "maxDate", getDate(this) );
-		    });
-		
-		function getDate( element ) {
-		    var date;
-		    try {
-		      date = $.datepicker.parseDate( dateFormat, element.value );
-		    } catch( error ) {
-		      date = null;
-		    }
-		
-		 	// Setter
-		    $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-		    
-		    return date;
-		}
-		
-	});
 </script>
 
 </body>

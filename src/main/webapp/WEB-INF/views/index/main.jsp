@@ -4,7 +4,7 @@
 <html>
 <head>
 	<jsp:include page="/WEB-INF/views/index/common.jsp" flush="false" />
-	<title>Main</title>
+	<title>사나 팬클럽</title>
 </head>
 <style>
 	table {
@@ -15,27 +15,22 @@
 <body>
 	<div class="right" style="width: 80%">
 		<span>${user.id} 님</span>
-		<button onclick="javascript:user_logout()">로그아웃</button><br/><br/><br/>
+		<button onclick="javascript:user_logout()">로그아웃</button>
+		<button onclick="javascript:mypage()">마이페이지</button><br/><br/>
 	</div>
 	
-	<div>
-		<table>
-			<tr>
-				<td>
-					<button onclick="javascript:board_normal_list()">자유게시판</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<button onclick="javascript:board_notice_list()">공지사항</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<button onclick="javascript:board_faq_list()">자주하는 질문</button>
-				</td>
-			</tr>
-		</table>
+	<div class="center">
+		<h1>죽으나 <span style="color: pink;">사나</span> 영원히 <span style="color: pink;">사나</span></h1>
+	</div>
+	
+	<div class="left" style="width: 45%; margin:auto; margin-bottom: 30px;">
+		<button style="margin-right: 15px;" onclick="javascript:board_faq_list()">프로필</button>
+		<button style="margin-right: 15px;" onclick="javascript:board_notice_list()">공지사항</button>
+		<button onclick="javascript:board_normal_list()">자유게시판</button>
+	</div>
+	
+	<div class="center">
+		<img alt="sana" src="resources/images/sana.jpg" width="50%">
 	</div>
 	
 	<script>
@@ -58,6 +53,11 @@
 		// 로그아웃
 		function user_logout() {
 			location.href = contextPath + "/user_logout";			
+		}
+		
+		// 마이페이지
+		function mypage() {
+			location.href = contextPath + '/user_mypage';
 		}
 	
 	</script>

@@ -105,10 +105,6 @@
 					<tr>
 						<td>${paging.totalBoard - (paging.pageNo-1)*paging.boardSize - status.index }</td>
 						<td><a href="javascript:get(${board.boardSeq})">${board.title } 
-						<c:if test="${board.replyCount ne null}">
-						[${board.replyCount }]
-						</c:if>
-						</a></td>
 						<td>${board.name }</td>
 						<td>${board.cnt }</td>
 						<fmt:parseDate value="${board.regDate}" var="regDate" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -138,9 +134,11 @@
 		</c:if>
 	</div>
 		
-	<div class="center" style="margin-top: 30px;">
-		<button onclick="regist()">글쓰기</button>
-	</div>
+	<c:if test="${user.id == 'admin' }">
+		<div class="center" style="margin-top: 30px;">
+			<button onclick="regist()">글쓰기</button>
+		</div>
+	</c:if>
 </div>
 
 <script>

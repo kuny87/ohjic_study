@@ -40,7 +40,7 @@
 <body>
 
 <div>
-	<h1 class="center">게시판</h1>
+	<h1 class="center">자유게시판</h1>
 </div>
 
 <div>

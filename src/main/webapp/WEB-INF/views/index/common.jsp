@@ -16,6 +16,7 @@
 <style>
 	.center {text-align: center;}
 	.right {text-align: right;}
+	.left {text-align: left;}
 </style>
 
 <script>

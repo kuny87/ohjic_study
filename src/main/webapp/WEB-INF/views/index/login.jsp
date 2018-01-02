@@ -5,7 +5,7 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<title>LOGIN</title>
+	<title>사나 팬클럽 Login</title>
 </head>
 <style>
 	table {
@@ -31,15 +31,12 @@
 					<td><input type="password" id="pw" name="name" onkeydown="onEnter();"/></td>
 				</tr>
 			</tbody>
-			<tfoot>
-				<tr>
-					<td class="center" colspan="2">
-						<button onclick="javascript:login()">로그인</button>
-						<button onclick="javascript:user_regist()">회원가입</button>
-					</td>
-				</tr>
-			</tfoot>
 		</table>
+	</div>
+	
+	<div style="text-align: center; margin-top: 20px;">
+		<button onclick="javascript:login()">로그인</button>
+		<button onclick="javascript:user_regist()">회원가입</button>
 	</div>
 	
 	

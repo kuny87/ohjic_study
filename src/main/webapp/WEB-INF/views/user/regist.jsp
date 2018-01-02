@@ -7,9 +7,11 @@
 	<title>회원가입</title>
 </head>
 <body>
-	<button onclick="javascript:login()">로그인하러 가기</button>
+	<div style="margin-top: 100px; text-align: center;">
+		<button onclick="javascript:login()">로그인하러 가기</button>
+	</div>
 	
-	<div>
+	<div style="width: 320px; text-align: center; margin: auto; margin-top: 30px; margin-bottom: 30px;">
 		<table>
 			<tr>
 				<td>아이디</td>
@@ -30,7 +32,9 @@
 		</table>
 	</div>
 	
-	<button onclick="javascript:user_regist()">가입하기</button>
+	<div style="text-align: center;">
+		<button onclick="javascript:user_regist()">가입하기</button>
+	</div>
 	
 	<script>
 
@@ -50,7 +54,7 @@
 			var validateFocus = null;
 
 			// input 데이터 체크 및 팝업text 입력, 포커스 입력
-			 if ($id.val() == "") {
+			/* if ($id.val() == "") {
 				validateMessage = '아이디를 입력해 주세요.';
 				validateFocus = id;
 			} else if ($pw.val() == "") {
@@ -69,8 +73,8 @@
 				validateFocus.focus();
 				alert(validateMessage);
 				return false;
-			}
-			
+			} */
+			 
 			$.ajax({
 				dataType : 'json',
 				url: "/test_ohjic/rest/user_regist",

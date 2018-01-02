@@ -5,8 +5,12 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +23,7 @@ import com.ohjic.test_ohjic.model.User;
 import com.ohjic.test_ohjic.rest.common.ResponseCode;
 import com.ohjic.test_ohjic.rest.common.RestResponse;
 import com.ohjic.test_ohjic.service.UserService;
+import com.ohjic.test_ohjic.validator.UserValidator;
 
 @RestController
 @RequestMapping("/rest")
@@ -27,13 +32,28 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	UserValidator userValidator;
+	
+	@InitBinder("user")
+	public void initRegEquipBinder(WebDataBinder dataBinder) {
+		dataBinder.addValidators(userValidator);
+	}
+	
 	@RequestMapping(value = "/user_regist", method = RequestMethod.GET, produces = "application/json")
 	public RestResponse userRegist(
-			@ModelAttribute User user
+			@ModelAttribute("user") @Valid User user,
+			BindingResult userBindingResult
 			) throws UnsupportedEncodingException, NoSuchAlgorithmException, IdDuplicatedException {
 
-		RestResponse response = new RestResponse();
-		response.setSuccess(true);
+		RestResponse response = userValidator.bindingError(userBindingResult);
+		
+		if(response.isSuccess() == false) {
+			return response;
+		}
+		
+//		RestResponse response = new RestResponse();
+//		response.setSuccess(true);
 		
 		try {
 			userService.registUser(user);
@@ -145,6 +165,5 @@ public class UserRestController {
 		
 		return response;
 	}
-	
 	
 }

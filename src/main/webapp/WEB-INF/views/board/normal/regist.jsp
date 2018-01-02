@@ -43,8 +43,8 @@
 	</table>
 	
 	<div class="center" style="margin-top: 50px;">
-		<button onclick="javascript:regist()">보내기</button>
-		<button onclick="javascript:list()">글목록</button>
+		<button onclick="javascript:regist()">작성</button>
+		<button onclick="javascript:list()">목록</button>
 	</div>
 </div>
 
