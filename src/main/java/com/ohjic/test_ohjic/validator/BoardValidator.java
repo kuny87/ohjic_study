@@ -8,27 +8,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.ohjic.test_ohjic.model.User;
+import com.ohjic.test_ohjic.model.Board;
 import com.ohjic.test_ohjic.rest.common.RestResponse;
 
 @Component
-public class UserValidator implements Validator {
+public class BoardValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return User.class.isAssignableFrom(clazz);
+		return Board.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		User user = (User) target; // validate 하고 싶은 객체를 받아와서 셋팅!
+		Board board = (Board) target; // validate 하고 싶은 객체를 받아와서 셋팅!
 		
-		if(user.getId().length() == 0) {
-			errors.rejectValue("id", "emptyId", "아이디를 입력해 주세요.");
-		} else if(user.getPw().length() == 0) {
-			errors.rejectValue("pw", "emptyPw", "비밀번호를 입력해 주세요.");
-		} else if(user.getName().length() == 0) {
-			errors.rejectValue("name", "emptyName", "이름을 입력해 주세요.");
+		if(board.getTitle().length() == 0) {
+			errors.rejectValue("title", "emptyTitle", "제목을 입력해 주세요.");
+		} else if(board.getContent().length() == 0) {
+			errors.rejectValue("content", "emptyContent", "내용을 입력해 주세요.");
 		}
 		
 	}
@@ -42,7 +40,7 @@ public class UserValidator implements Validator {
 		}
 		
 		List<String> errorCode = Arrays.asList(
-				"emptyId", "emptyPw", "emptyName");
+				"emptyTitle", "emptyContent");
 		
 		for (String temp : errorCode) {
 			if(temp.equals(bindingResult.getFieldError().getCode())) {

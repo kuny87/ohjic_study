@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<td>PW</td>
-					<td><input type="password" id="pw" name="name" onkeydown="onEnter();"/></td>
+					<td><input type="password" id="pw" name="pw" onkeydown="onEnter();"/></td>
 				</tr>
 			</tbody>
 		</table>
@@ -75,7 +75,8 @@
 				method : 'GET',
 				data : {
 				   "id" : $id.val(),
-				   "pw" : $pw.val()
+				   "pw" : $pw.val(),
+				   "name" : "pass"
 				}
 			}).done( function(result) {
 				if (result.success) {

@@ -50,6 +50,7 @@
 
 <script>
 
+	// 글등록
 	function regist() {
 		
 		var $title = $('#title');
@@ -88,15 +89,18 @@
 			}			
 		}).done( function(result) {
 			if (result.success) {
-				alert("등록완료")
+				alert("등록완료");
 				location.href = contextPath + "/board_normal_list";
+			}else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
-			alert("등록실패")
+			alert("등록실패");
 		});
 		
 	}
 	
+	// 글목록
 	function list() {
 		location.href = contextPath + "/board_normal_list";
 	}

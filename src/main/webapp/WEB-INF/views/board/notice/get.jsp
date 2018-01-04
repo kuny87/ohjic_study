@@ -52,10 +52,10 @@
 				<tr>
 					<td>제목</td>
 					<td>
-						<c:if test="${user.userSeq == board.regSeq}">
+						<c:if test="${user.id == 'admin'}">
 							<input type="text" id="title" name="title" style="width: 100%" value="${board.title}" />
 						</c:if>
-						<c:if test="${user.userSeq != board.regSeq}">
+						<c:if test="${user.id != 'admin'}">
 							<span>${board.title}</span>
 						</c:if>
 					</td>
@@ -64,10 +64,10 @@
 				<tr>
 					<td>내용</td>
 					<td colspan="2">
-						<c:if test="${user.userSeq == board.regSeq}">
+						<c:if test="${user.id == 'admin'}">
 							<textarea id="content" rows="10" cols="50" maxlength="6000" style="overflow:hidden; line-height: 14px; height: 60px; width: 100%;" title="내용">${board.content}</textarea>
 						</c:if>
-						<c:if test="${user.userSeq != board.regSeq}">
+						<c:if test="${user.id != 'admin'}">
 							<span>${board.content}</span>
 						</c:if>
 					</td>
@@ -87,7 +87,7 @@
 	</div>
 	
 	<div class="center" style="margin-top: 50px;">
-		<c:if test="${user.userSeq == board.regSeq}">
+		<c:if test="${user.id == 'admin'}">
 			<button onclick="modify()">수정</button>
 			<button onclick="remove()">삭제</button>
 		</c:if>
@@ -151,6 +151,8 @@
 		}).done( function(result) {
 			if (result.success) {
 				alert("수정완료")
+			} else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
 			alert("수정실패")

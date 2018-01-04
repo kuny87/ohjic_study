@@ -243,7 +243,9 @@
 			}			
 		}).done( function(result) {
 			if (result.success) {
-				alert("수정완료")
+				alert("수정완료");
+			} else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
 			alert("수정실패")
@@ -251,6 +253,7 @@
 			
 	}
 	
+	// 글삭제
 	function remove() {
 
 		var remove_confirm = confirm("삭제하시겠습니까?");
@@ -267,11 +270,11 @@
 				}			
 			}).done( function(result) {
 				if (result.success) {
-					alert("삭제완료")
+					alert("삭제완료");
 					location.href = contextPath + "/board_normal_list";
 				}
 			}).fail(function(result) {
-				alert("삭제실패")
+				alert("삭제실패");
 			});
 			
 		}
@@ -312,11 +315,13 @@
 			}			
 		}).done( function(result) {
 			if (result.success) {
-				alert("등록완료")
+				alert("등록완료");
 				location.href = contextPath + "/board_normal_get?boardSeq=" + boardSeq;
+			} else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
-			alert("등록실패")
+			alert("등록실패");
 		});
 	}
 	
@@ -384,14 +389,16 @@
 				}			
 			}).done( function(result) {
 				if (result.success) {
-					alert("수정완료")
+					alert("수정완료");
 					$replyContentSpan.show();
 					$replyContentInput.hide();
 					$modifySpan.html('수정');
 					$replyContentSpan.html($replyContentInput.val());
+				} else {
+					alert(result.message);
 				}
 			}).fail(function(result) {
-				alert("수정실패")
+				alert("수정실패");
 			});
 			
 		}
@@ -454,11 +461,13 @@
 			}			
 		}).done( function(result) {
 			if (result.success) {
-				alert("등록완료")
+				alert("등록완료");
 				location.reload();
+			} else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
-			alert("등록실패")
+			alert("등록실패");
 		});
 		
 	}

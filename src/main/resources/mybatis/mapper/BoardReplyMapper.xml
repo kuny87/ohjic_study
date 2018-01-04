@@ -42,7 +42,6 @@
 			board_reply_seq != #{boardReplySeq}
 			and reorder <![CDATA[>=]]> #{reorder}
 			and board_seq = #{boardSeq}
-<!-- 			and del_yn = 'F' -->
 	</update>
 	
 
@@ -73,7 +72,6 @@
 			board_reply
 		where 
 			board_reply_seq = #{boardReplySeq}
-<!-- 			and del_yn = 'F' -->
 	</select>
 	
 	<select id="selectMaxReply" resultMap="BoardReplyMap">
@@ -101,7 +99,6 @@
 	</update>
 	
 	
-	<!-- 최건희 --> 
 	<update id="updateGroupSeqChilde" parameterType="com.ohjic.test_ohjic.model.BoardReply">
 		update
 			board_reply
@@ -129,7 +126,6 @@
 			board_reply 
 		where 
 			board_seq = #{boardSeq} 
-<!-- 			and del_yn = 'F' -->
 	</select>	
 	
 	
@@ -141,7 +137,6 @@
 		where 
 			board_reply_seq = #{reparent}
 			or reparent = #{reparent} 
-<!-- 			and del_yn = 'F' -->
 	</select>
 	
 	
@@ -156,48 +151,5 @@
 			and board_reply_seq <![CDATA[>=]]> #{boardReplySeq}
 			and reparent <![CDATA[>=]]> #{reparent}
 	</select>
-	
-	<!-- select * from member where id=? -->
-	<!-- 
-	<insert id="b_reply_insert" parameterType="test.com.spring.board.model.BoardDTO">
-		insert into board(num,title,content,name,searchCount,reply,replynum,replystep,replylevel) 
-		values(seq_board_num.nextval,#{title},#{content},#{name},0,#{reply},#{replyNum},#{replyStep},#{replyLevel})
-	</insert>
-	
-	
-	<update id="b_reply_update" parameterType="test.com.spring.board.model.BoardDTO">
-		update board set replystep=replystep+1 
-		where replynum=#{replyNum} and replystep > #{replyStep}
-	</update>
-	
-	
-	<select id="b_reply_select" parameterType="test.com.spring.board.model.BoardDTO"
-		resultType="test.com.spring.board.model.BoardDTO">
-		select replynum,replystep,replylevel 
-		from board where num=#{num}
-	</select>
-	
-	
-	<select id="b_reply_search" parameterType="test.com.spring.board.model.BoardDTO">
-		select * from (select rownum rnum,num,title,content,name,regDate,searchCount,reply,replynum,replystep,replylevel 
-		from ((select * from board 
-	</select>
-	
-	
-	<select id="b_reply_searchList" resultType="int"
-		parameterType="hashmap">
-		select count(*) totalRows from board 
-		<if test="searchKey == 'title'">
-		where title LIKE #{searchWord}
-		</if>
-		<if test="searchKey != 'title'">
-		where name LIKE #{searchWord}
-		</if>
-	</select>
-	
-	
-	<select id="b_reply_totalRows" resultType="int">
-		select count(*) totalRows from board
-	</select> -->
 	
 </mapper>

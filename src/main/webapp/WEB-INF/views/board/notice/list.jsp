@@ -218,18 +218,20 @@
 		}
 	}
 	
+	// 로그아웃
 	function logout() {
 		location.href = contextPath + '/user_logout';
 	}
 	
+	// 메인페이지
 	function main() {
 		location.href = contextPath + '/main';
 	}
 	
+	// 마이페이지
 	function mypage() {
 		location.href = contextPath + '/user_mypage';
 	}
-	
 	
 	// jquery ui 달력
 	$( function() {
@@ -267,6 +269,7 @@
 		}
 		
 	});
+	
 </script>
 
 </body>

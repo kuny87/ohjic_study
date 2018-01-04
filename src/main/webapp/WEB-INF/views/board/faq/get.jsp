@@ -146,10 +146,12 @@
 			}			
 		}).done( function(result) {
 			if (result.success) {
-				alert("수정완료")
+				alert("수정완료");
+			} else {
+				alert(result.message);
 			}
 		}).fail(function(result) {
-			alert("수정실패")
+			alert("수정실패");
 		});
 			
 	}

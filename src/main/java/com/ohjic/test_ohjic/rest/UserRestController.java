@@ -35,7 +35,7 @@ public class UserRestController {
 	@Autowired
 	UserValidator userValidator;
 	
-	@InitBinder("user")
+	@InitBinder
 	public void initRegEquipBinder(WebDataBinder dataBinder) {
 		dataBinder.addValidators(userValidator);
 	}
@@ -51,10 +51,7 @@ public class UserRestController {
 		if(response.isSuccess() == false) {
 			return response;
 		}
-		
-//		RestResponse response = new RestResponse();
-//		response.setSuccess(true);
-		
+	
 		try {
 			userService.registUser(user);
 		} catch (IdDuplicatedException e) {
@@ -100,10 +97,14 @@ public class UserRestController {
 	
 	@RequestMapping(value = "/user_modify", method = RequestMethod.GET, produces = "application/json")
 	public RestResponse userModify(
-			@ModelAttribute User user) {
+			@ModelAttribute("user") @Valid User user,
+			BindingResult userBindingResult) {
 
-		RestResponse response = new RestResponse();
-		response.setSuccess(true);
+		RestResponse response = userValidator.bindingError(userBindingResult);
+		
+		if(response.isSuccess() == false) {
+			return response;
+		}
 		
 		try {
 			userService.modifyUser(user);
@@ -137,11 +138,15 @@ public class UserRestController {
 	
 	@RequestMapping(value = "/user_login", method = RequestMethod.GET, produces = "application/json")
 	public RestResponse userLogin(
-			@ModelAttribute User user,
+			@ModelAttribute("user") @Valid User user,
+			BindingResult userBindingResult,
 			HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException, IdNoMatchException, PasswordNoMatchException {
 		
-		RestResponse response = new RestResponse();
-		response.setSuccess(true);
+		RestResponse response = userValidator.bindingError(userBindingResult);
+		
+		if(response.isSuccess() == false) {
+			return response;
+		}
 		
 		try {
 			userService.getUserCheck(user);

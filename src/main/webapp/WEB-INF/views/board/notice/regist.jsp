@@ -50,6 +50,7 @@
 
 <script>
 
+	// 글등록
 	function regist() {
 		
 		var $title = $('#title');
@@ -97,6 +98,7 @@
 		
 	}
 	
+	// 글목록
 	function list() {
 		location.href = contextPath + "/board_notice_list";
 	}

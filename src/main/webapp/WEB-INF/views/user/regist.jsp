@@ -15,19 +15,19 @@
 		<table>
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" id="id"/></td>	
+				<td><input type="text" id="id" name="id" /></td>	
 			</tr>
 			<tr>
 				<td>패스워드</td>
-				<td><input type="password" id="pw" /></td>
+				<td><input type="password" id="pw" name="pw" /></td>
 			</tr>
 			<tr>
 				<td>패스워드 재확인</td>
-				<td><input type="password" id="pwConfirm" /></td>
+				<td><input type="password" id="pwConfirm" name="pwConfirm" /></td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" id="userName" /></td>
+				<td><input type="text" id="userName" name="userName" /></td>
 			</tr>
 		</table>
 	</div>
@@ -54,7 +54,7 @@
 			var validateFocus = null;
 
 			// input 데이터 체크 및 팝업text 입력, 포커스 입력
-			/* if ($id.val() == "") {
+			if ($id.val() == "") {
 				validateMessage = '아이디를 입력해 주세요.';
 				validateFocus = id;
 			} else if ($pw.val() == "") {
@@ -73,28 +73,26 @@
 				validateFocus.focus();
 				alert(validateMessage);
 				return false;
-			} */
-			 
+			}
+			
 			$.ajax({
 				dataType : 'json',
 				url: "/test_ohjic/rest/user_regist",
-				method : 'GET',
+				method : 'get',
 				data : {
 				   "id" : $id.val(),
 				   "pw" : $pw.val(),
-				   "pwConfirm" : $pwConfirm.val(),
 				   "name" : $userName.val()
 				}			
 			}).done( function(result) {
 				if (result.success) {
-					alert("가입완료")
+					alert("가입완료");
 					location.href = "/test_ohjic";
 				}else {
 					alert(result.message);
-					$('#id').focus();
 				}
 			}).fail(function(result) {
-				alert("가입실패")
+				alert("가입실패");
 			});
 			
 		}
