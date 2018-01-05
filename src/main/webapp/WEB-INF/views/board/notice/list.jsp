@@ -23,12 +23,6 @@
 </style>
 
 <body>
-<div class="right" style="width: 80%">
-	${user.id} 님 
-	<button onclick="javascript:logout()">로그아웃</button>
-	<button onclick="javascript:main()">메인</button>
-	<button onclick="javascript:mypage()">마이페이지</button>
-</div>
 
 <div>
 	<h1 class="center">공지사항</h1>
@@ -216,21 +210,6 @@
 		}else {
 			location.href = contextPath + '/board_notice_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
 		}
-	}
-	
-	// 로그아웃
-	function logout() {
-		location.href = contextPath + '/user_logout';
-	}
-	
-	// 메인페이지
-	function main() {
-		location.href = contextPath + '/main';
-	}
-	
-	// 마이페이지
-	function mypage() {
-		location.href = contextPath + '/user_mypage';
 	}
 	
 	// jquery ui 달력

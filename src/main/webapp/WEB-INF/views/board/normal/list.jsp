@@ -7,6 +7,7 @@
 	<jsp:include page="/WEB-INF/views/index/common.jsp" flush="false" />
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<title>자유게시판</title>
+</div>
 </head>
 
 <style>
@@ -23,12 +24,6 @@
 </style>
 
 <body>
-<div class="right" style="width: 80%">
-	${user.id} 님 
-	<button onclick="javascript:logout()">로그아웃</button>
-	<button onclick="javascript:main()">메인</button>
-	<button onclick="javascript:mypage()">마이페이지</button>
-</div>
 
 <div>
 	<h1 class="center">자유게시판</h1>
@@ -219,22 +214,6 @@
 			location.href = contextPath + '/board_normal_list?searchType=' + searchType + '&keyword=' + keyword + '&boardSize=' + boardSize + '&pageNo=1';	
 		}
 	}
-	
-	// 로그아웃
-	function logout() {
-		location.href = contextPath + '/user_logout';
-	}
-	
-	// 메인페이지
-	function main() {
-		location.href = contextPath + '/main';
-	}
-	
-	// 마이페이지
-	function mypage() {
-		location.href = contextPath + '/user_mypage';
-	}
-	
 	
 	// jquery ui 달력
 	$( function() {

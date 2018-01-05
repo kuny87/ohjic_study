@@ -21,13 +21,65 @@
 	.active {font-size: 22px;}
 </style>
 
+<head>
+	<div class="right" style="width: 78%">
+		<c:if test="${user.id != null }">
+			${user.id} 님
+			<button onclick="javascript:logout()">로그아웃</button>
+		</c:if>
+		<c:if test="${user.id == null }">
+			<button onclick="javascript:login()">로그인</button>
+		</c:if>
+		<button onclick="javascript:mypage()">마이페이지</button>
+	</div>
+	
+	<div style="width: 45%; margin:auto; margin-top:20px; margin-bottom: 40px;">
+		<button style="margin-right: 15px;" onclick="javascript:main()">메인</button>
+		<button style="margin-right: 15px;" onclick="javascript:board_faq_list()">프로필</button>
+		<button style="margin-right: 15px;" onclick="javascript:board_notice_list()">공지사항</button>
+		<button onclick="javascript:board_normal_list()">자유게시판</button>
+	</div>
+	
+</head>
+
 <script>
 
 	var contextPath = '${contextPath}',
 		resourcePath = '${resourcePath}';
 
-	var userId = '${user.id}';
-	if(userId == null || userId == ''){
-		location.href = '/test_ohjic';
+	// 로그인
+	function login() {
+		location.href = contextPath + '/user_login';
 	}
+	
+	// 로그아웃
+	function logout() {
+		location.href = contextPath + '/user_logout';
+	}
+	
+	// 메인페이지
+	function main() {
+		location.href = contextPath + '/main';
+	}
+	
+	// 마이페이지
+	function mypage() {
+		location.href = contextPath + '/user_mypage';
+	}
+	
+	// 자유 게시판
+	function board_normal_list() {
+		location.href = contextPath + "/board_normal_list";
+	}
+	
+	// 공지사항 게시판
+	function board_notice_list() {
+		location.href = contextPath + "/board_notice_list";
+	}
+	
+	// FAQ 게시판
+	function board_faq_list() {
+		location.href = contextPath + "/board_faq_list";
+	}
+	
 </script>

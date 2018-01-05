@@ -87,7 +87,7 @@
 			from board bn
 			left outer join (select count(1) as cnt, board_seq, reg_seq from board_reply br where br.board_type = #{type} and br.del_yn = 'F' group by br.board_seq) as reply_count on reply_count.board_seq = bn.board_seq
 			left outer join user u on u.user_seq = reply_count.reg_seq
-			where ${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
+			where bn.${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
 				and bn.type = #{type}
 				and bn.del_yn = 'F'
 				<if test="startDate != null and endDate != null">
@@ -113,7 +113,7 @@
 		from board bn
 		left outer join (select count(1) as cnt, board_seq, reg_seq from board_reply br where br.board_type = #{type} and br.del_yn = 'F' group by br.board_seq) as reply_count on reply_count.board_seq = bn.board_seq
 		left outer join user u on u.user_seq = reply_count.reg_seq
-		where ${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
+		where bn.${searchType.SValue} LIKE CONCAT('%', #{keyword}, '%')
 			and bn.type = #{type}
 			and bn.del_yn = 'F'
 			<if test="startDate != null and endDate != null">

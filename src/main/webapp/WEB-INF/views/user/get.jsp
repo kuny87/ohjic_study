@@ -75,17 +75,11 @@
 	<div class="center" style="margin-top: 50px;">
 		<button onclick="modify()">수정</button>
 		<button onclick="remove()">탈퇴</button>
-		<button onclick="main()">메인</button>
 	</div>
 	
 </div>
 
 <script>
-	
-	function main() {
-		location.href = contextPath + '/main';
-	}
-	
 	
 	function remove() {
 
