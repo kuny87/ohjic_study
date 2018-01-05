@@ -17,6 +17,8 @@
 	.center {text-align: center;}
 	.right {text-align: right;}
 	.left {text-align: left;}
+	.cp {cursor: pointer; color: blue;}
+	.active {font-size: 22px;}
 </style>
 
 <script>

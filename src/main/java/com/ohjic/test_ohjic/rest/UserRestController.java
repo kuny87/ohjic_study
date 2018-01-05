@@ -35,7 +35,7 @@ public class UserRestController {
 	@Autowired
 	UserValidator userValidator;
 	
-	@InitBinder
+	@InitBinder("user")
 	public void initRegEquipBinder(WebDataBinder dataBinder) {
 		dataBinder.addValidators(userValidator);
 	}

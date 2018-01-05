@@ -102,9 +102,9 @@
 			<c:forEach var="reply" items="${board.boardReplyList}" varStatus="status">
 			<c:set var="seq" value="${reply.boardReplySeq}"></c:set>
 				<c:if test="${reply.redepth ne 0}">
-				<span style="float: left; margin-left: ${30*reply.redepth}px;">└</span>
+				<span style="float: left; margin-left: ${35*reply.redepth}px;">└</span>
 				</c:if>
-				<div style="margin-left: ${40*reply.redepth}px;">
+				<div style="margin-left: ${35*reply.redepth}px;">
 					<table id="replyTable" class="table_reply" style="width: 600px; height: 70px;">
 						<tr>
 							<td>
@@ -116,10 +116,10 @@
 										<span>${reply.regName }  </span>
 										<span>${rDate }  </span>
 										<c:if test="${reply.regSeq eq user.userSeq}">
-											<a href="#" onclick="replyRemove('${reply.boardReplySeq}')">삭제</a>
-				        					<a href="#" onclick="replyModify('${reply.boardReplySeq}')"><span id="modifySpan${seq}">수정</span></a>										
+											<span class="cp" onclick="replyRemove('${reply.boardReplySeq}')">삭제</span>
+				        					<span class="cp" id="modifySpan${seq}" onclick="replyModify('${reply.boardReplySeq}')">수정</span>										
 										</c:if>
-				        				<a href="#" onclick="replyReply('${reply.boardReplySeq}')"><span class="rReplySpanClass" id="replySpan${seq}">댓글달기</span></a>
+				        				<span class="rReplySpanClass cp" id="replySpan${seq}" onclick="replyReply('${reply.boardReplySeq}')">댓글달기</span>
 									</div>
 									<div>
 										<span id="replyContentSpan${seq}">${reply.replyContent }</span>
