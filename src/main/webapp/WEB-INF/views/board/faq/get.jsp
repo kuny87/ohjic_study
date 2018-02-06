@@ -34,7 +34,7 @@
 <body>
 
 <div>
-	<h1 class="center">프로필</h1>
+	<h1 class="center">프로필 </h1>
 </div>
 
 <div>
